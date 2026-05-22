@@ -39,12 +39,12 @@ No magic. No black box. Just networking fundamentals pushed to their logical con
   ┌──────────────────────────────────────────────────────────────┐
   │                  VMware NAT  ·  192.168.244.0/24             │
   │                                                              │
-  │  [💀 KALI]──────────────ARP POISON──────────[🎯 UBUNTU AGENT]│
+  │  [💀 KALI]──────────────ARP POISON──────────[🎯 fedora]│
   │  192.168.244.129           ↕↕↕↕↕           192.168.244.128  │
   │         │            all traffic                             │
   │         │            rerouted here                           │
   │         ▼                                                    │
-  │  [🌐 UBUNTU SERVEUR]                                         │
+  │  [🌐 debian]                                         │
   │   192.168.244.131                                            │
   │   Apache2 HTTP                                               │
   └──────────────────────────────────────────────────────────────┘
@@ -53,8 +53,8 @@ No magic. No black box. Just networking fundamentals pushed to their logical con
 | Host | Function | OS | IP |
 |------|----------|----|----|
 | `kali` | 💀 Attacker — runs arpspoof + Wireshark | Kali Linux | `192.168.244.129` |
-| `ubuntu-agent` | 🎯 Victim — browses the web server | Ubuntu Linux | `192.168.244.128` |
-| `ubuntu-serveur` | 🌐 Target server — runs Apache2 | Ubuntu Linux | `192.168.244.131` |
+| `fedora` | 🎯 Victim — browses the web server | fedora Linux | `192.168.244.128` |
+| `debian` | 🌐 Target server — runs Apache2 | debian Linux | `192.168.244.131` |
 
 ---
 
@@ -70,7 +70,7 @@ Confirm each machine has the correct IP and can reach the others.
 # Run on every machine
 ip a
 
-# From ubuntu-agent, verify connectivity to the web server
+# From fedora, verify connectivity to the web server
 ping 192.168.244.131
 ```
 
@@ -84,7 +84,7 @@ ping 192.168.244.131
 
 ---
 
-### 02 · Deploy the Web Server (ubuntu-serveur)
+### 02 · Deploy the Web Server (fedora)
 
 Install Apache2 and expose a custom page over HTTP.
 
@@ -113,7 +113,7 @@ curl http://localhost
 
 ---
 
-### 03 · Confirm HTTP from the Victim (ubuntu-agent)
+### 03 · Confirm HTTP from the Victim (debian)
 
 The victim can reach the server — traffic is flowing and unprotected.
 
@@ -140,7 +140,7 @@ sudo wireshark
 
 ---
 
-### 05 · Flood the Network with HTTP Traffic (ubuntu-agent)
+### 05 · Flood the Network with HTTP Traffic 
 
 Keep the victim machine generating requests so there is plenty to intercept.
 
@@ -251,8 +251,8 @@ ARP has no verification mechanism by design. Any machine on the subnet can claim
 
 ```
 Kali Linux         —  attacker platform
-Ubuntu (Agent)     —  victim machine
-Ubuntu (Serveur)   —  Apache2 web server
+Ubuntu      —  victim machine
+Ubuntu    —  Apache2 web server
 Wireshark          —  packet capture & analysis
 arpspoof (dsniff)  —  ARP cache poisoning
 VMware Workstation —  isolated virtual network
