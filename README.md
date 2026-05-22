@@ -39,12 +39,12 @@ No magic. No black box. Just networking fundamentals pushed to their logical con
   ┌──────────────────────────────────────────────────────────────┐
   │                  VMware NAT  ·  192.168.244.0/24             │
   │                                                              │
-  │  [💀 KALI]──────────────ARP POISON──────────[🎯 fedora]│
+  │  [💀 KALI]──────────────ARP POISON──────────[🎯 debian]│
   │  192.168.244.129           ↕↕↕↕↕           192.168.244.128  │
   │         │            all traffic                             │
   │         │            rerouted here                           │
   │         ▼                                                    │
-  │  [🌐 debian]                                         │
+  │  [🌐 fedora]                                         │
   │   192.168.244.131                                            │
   │   Apache2 HTTP                                               │
   └──────────────────────────────────────────────────────────────┘
@@ -53,8 +53,8 @@ No magic. No black box. Just networking fundamentals pushed to their logical con
 | Host | Function | OS | IP |
 |------|----------|----|----|
 | `kali` | 💀 Attacker — runs arpspoof + Wireshark | Kali Linux | `192.168.244.129` |
-| `fedora` | 🎯 Victim — browses the web server | fedora Linux | `192.168.244.128` |
-| `debian` | 🌐 Target server — runs Apache2 | debian Linux | `192.168.244.131` |
+| `debian` | 🎯 Victim — browses the web server | debian Linux | `192.168.244.128` |
+| `fedora` | 🌐 Target server — runs Apache2 | fedora Linux | `192.168.244.131` |
 
 ---
 
